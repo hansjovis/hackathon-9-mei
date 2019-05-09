@@ -11,7 +11,8 @@ module.exports = function(grunt) {
     sass: {
       dist: {
         options: {
-          style: 'compressed'
+          style: 'compressed',
+          sourcemap: 'none',
         },
         files: {
           'dist/assets/style.css': 'source-files/style.scss',
@@ -33,6 +34,16 @@ module.exports = function(grunt) {
         flatten: true,
         filter: filepath => filepath.endsWith(".html")
       }
+    },
+    compress: {
+      main: {
+        options: {
+          archive: 'dist.zip'
+        },
+        files: [
+          { cwd: 'dist/', src: ['**'], dest: '/', expand: true }
+        ]
+      }
     }
   });
 
@@ -40,8 +51,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-compress');
 
   // Define aliases here.
-  grunt.registerTask('default', 'My default task description', ['clean', 'sass', 'copy']);
+  grunt.registerTask('default', 'My default task description', ['clean', 'sass', 'copy', 'compress']);
 
 };
