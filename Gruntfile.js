@@ -21,15 +21,18 @@ module.exports = function(grunt) {
       }
     },
     babel: {
-      main: {
-        options: {
-          presets: ['@babel/preset-env']
-        },
-        dist: {
-          files: {
-            'dist/app.js': 'source-files/js/script.js'
+      options: {
+        presets: ['minify']
+      },
+      dist: {
+        files: [
+          {
+            expand: true,
+            cwd: 'source-files/js',
+            src: ['*.js'],
+            dest: 'dist/assets/js'
           }
-        }
+        ]
       }
     },
     copy: {
@@ -62,7 +65,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-babel');
 
   // Define aliases here.
-  grunt.registerTask('build', 'Build for production.', ['clean', 'sass', 'copy']);
+  grunt.registerTask('build', 'Build for production.', ['clean', 'copy', 'sass', 'babel']);
   grunt.registerTask('default', 'Runs ALL the tasks.', ['build', 'compress']);
 
 };
