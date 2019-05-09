@@ -54,6 +54,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-compress');
 
   // Define aliases here.
-  grunt.registerTask('default', 'My default task description', ['clean', 'sass', 'copy', 'compress']);
+  grunt.registerTask('build', 'Build for production.', ['clean', 'sass', 'copy']);
+  grunt.registerTask('default', 'Runs ALL the tasks.', ['build', 'compress']);
 
 };
