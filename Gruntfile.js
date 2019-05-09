@@ -62,6 +62,13 @@ module.exports = function(grunt) {
           { cwd: 'dist/', src: ['**'], dest: '/', expand: true }
         ]
       }
+    },
+    'update-version': {
+      files: [
+          'source-files/index.php',
+          'source-files/classes/class.php',
+          'source-files/js/script.js'
+      ]
     }
   });
 
@@ -76,5 +83,26 @@ module.exports = function(grunt) {
   grunt.registerTask('build', 'Build for production.', ['clean', 'copy', 'sass', 'babel']);
   grunt.registerTask('artifact', 'Runs ALL the tasks.', ['build', 'compress']);
   grunt.registerTask('default', 'Runs ALL the tasks.', ['build', 'compress']);
+
+  grunt.registerTask('update-version', 'Updates the version number.', version_number => {
+    // Validate input.
+    if ( ! version_number.match(/[0-9]+\.[0-9]+\.[0-9]+/) ) {
+      grunt.fail.fatal('please enter a valid version number');
+    }
+
+    grunt.log.writeln( 'updating version number to', version_number );
+
+    const config = grunt.config.get('update-version');
+    const files_to_process = config.files;
+
+    files_to_process.forEach( filepath => {
+      grunt.log.writeln( `  updating "${filepath}"`);
+
+      let contents = grunt.file.read(filepath);
+      contents = contents.replace(/[0-9]+\.[0-9]+\.[0-9]+/, version_number);
+      grunt.file.write(filepath, contents);
+    });
+
+  });
 
 };
