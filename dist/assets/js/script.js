@@ -1,4 +1,4 @@
-"use strict";/**
+"use strict";window.plugin.version="1.0.0";/**
  * Capitalize the first letter of a string.
  *
  * @param   {string} string The string to capitalize.

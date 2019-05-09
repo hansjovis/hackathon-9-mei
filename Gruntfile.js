@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 /*global module:false*/
 module.exports = function(grunt) {
 
@@ -102,7 +103,21 @@ module.exports = function(grunt) {
       contents = contents.replace(/[0-9]+\.[0-9]+\.[0-9]+/, version_number);
       grunt.file.write(filepath, contents);
     });
+  });
 
+  grunt.registerTask('licensed-artifact', 'Creates a licensed build.', () => {
+    const secret = crypto.randomBytes(32).toString('hex');
+
+    let contents = grunt.file.read('source-files/classes/class.php');
+    contents = contents.replace('SUPER_SECRET_KEY_HERE', secret);
+    grunt.file.write('source-files/classes/class.php', contents);
+
+    grunt.registerTask('reset-super-secret-key', 'Resets key', () => {
+      contents = contents.replace(secret, 'SUPER_SECRET_KEY_HERE');
+      grunt.file.write('source-files/classes/class.php', contents);
+    });
+
+    grunt.task.run('artifact', 'reset-super-secret-key');
   });
 
 };
