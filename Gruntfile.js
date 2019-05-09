@@ -5,6 +5,9 @@ module.exports = function(grunt) {
   grunt.initConfig({
     // Metadata.
     pkg: grunt.file.readJSON('package.json'),
+    clean: {
+      dist: ['dist']
+    },
     sass: {
       dist: {
         options: {
@@ -25,10 +28,10 @@ module.exports = function(grunt) {
       },
       index: {
         expand: true,
-        src: ['index.html'],
+        src: ['*'],
         dest: 'dist/',
         flatten: true,
-        filter: 'isFile'
+        filter: filepath => filepath.endsWith(".html")
       }
     }
   });
@@ -36,8 +39,9 @@ module.exports = function(grunt) {
   // Load tasks here.
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-sass');
+  grunt.loadNpmTasks('grunt-contrib-clean');
 
   // Define aliases here.
-  grunt.registerTask('default', 'My default task description', ['sass', 'copy']);
+  grunt.registerTask('default', 'My default task description', ['clean', 'sass', 'copy']);
 
 };
