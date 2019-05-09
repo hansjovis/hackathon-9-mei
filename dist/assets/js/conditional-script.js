@@ -1,4 +1,4 @@
-/**
+"use strict";/**
  * Updates the traffic light present on the page
  *
  * @param {Object} indicator The indicator for the keyword score.

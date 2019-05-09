@@ -22,7 +22,7 @@ module.exports = function(grunt) {
     },
     babel: {
       options: {
-        presets: ['minify']
+        presets: ['minify', '@babel/preset-env']
       },
       dist: {
         files: [

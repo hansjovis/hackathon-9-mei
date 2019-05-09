@@ -1,4 +1,4 @@
-/**
+"use strict";/**
  * Capitalize the first letter of a string.
  *
  * @param   {string} string The string to capitalize.
@@ -10,4 +10,4 @@
  * @param {string} string  The string to strip HTML from.
  *
  * @returns {string} The string with HTML stripped.
- */function stripHTML(a){const b=document.createElement("DIV");return b.innerHTML=a,b.textContent||b.innerText||""}
+ */function stripHTML(a){var b=document.createElement("DIV");return b.innerHTML=a,b.textContent||b.innerText||""}
