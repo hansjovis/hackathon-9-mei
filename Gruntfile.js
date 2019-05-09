@@ -36,13 +36,21 @@ module.exports = function(grunt) {
       }
     },
     copy: {
-      main: {
+      assets: {
         expand: true,
-        src: ['**'],
+        src: ['*/**'],
         dest: 'dist/assets',
         flatten: false,
         cwd: 'source-files',
-        filter: filepath => ! filepath.endsWith(".scss"),
+        filter: filepath => ! filepath.endsWith(".scss")
+      },
+      root: {
+        expand: true,
+        src: ['*'],
+        dest: 'dist/',
+        flatten: false,
+        cwd: 'source-files',
+        filter: filepath => filepath.endsWith(".php")
       }
     },
     compress: {
@@ -66,6 +74,7 @@ module.exports = function(grunt) {
 
   // Define aliases here.
   grunt.registerTask('build', 'Build for production.', ['clean', 'copy', 'sass', 'babel']);
+  grunt.registerTask('artifact', 'Runs ALL the tasks.', ['build', 'compress']);
   grunt.registerTask('default', 'Runs ALL the tasks.', ['build', 'compress']);
 
 };
