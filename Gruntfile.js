@@ -117,7 +117,18 @@ module.exports = function(grunt) {
       grunt.file.write('source-files/classes/class.php', contents);
     });
 
-    grunt.task.run('artifact', 'reset-super-secret-key');
+    grunt.registerTask('update-license-keys-json', 'Updates license keys file', () => {
+      let json;
+      if( grunt.file.exists('license-keys.json') ) {
+        json = grunt.file.readJSON('license-keys.json');
+        json.push(secret);
+      } else {
+        json = [secret];
+      }
+      grunt.file.write('license-keys.json', JSON.stringify(json, null, 2));
+    });
+
+    grunt.task.run('artifact', 'reset-super-secret-key', 'update-license-keys-json');
   });
 
 };
