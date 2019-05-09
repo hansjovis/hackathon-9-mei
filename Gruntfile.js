@@ -5,13 +5,23 @@ module.exports = function(grunt) {
   grunt.initConfig({
     // Metadata.
     pkg: grunt.file.readJSON('package.json'),
+    sass: {
+      dist: {
+        options: {
+          style: 'compressed'
+        },
+        files: {
+          'dist/assets/style.css': 'source-files/style.scss',
+        }
+      }
+    },
     copy: {
       assets: {
         expand: true,
         src: ['source-files/*'],
         dest: 'dist/assets',
         flatten: true,
-        filter: 'isFile'
+        filter: filepath => ! filepath.endsWith(".scss")
       },
       index: {
         expand: true,
@@ -25,10 +35,9 @@ module.exports = function(grunt) {
 
   // Load tasks here.
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-sass');
 
   // Define aliases here.
-  grunt.registerTask('default', 'My default task description', function() {
-    grunt.log.writeln( 'This is the default grunt task, create a new task and configure.' );
-  });
+  grunt.registerTask('default', 'My default task description', ['sass', 'copy']);
 
 };
